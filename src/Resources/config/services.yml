@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        autowire: true # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    
+    ivo.loadscripts.replacedynamicscripttagslistener:
+      class: Ivo\LoadScripts\EventListener\ReplaceDynamicScriptTagsListener
+      tags:
+        - { name: contao.hook, hook: replaceDynamicScripttags, priority: -999 }

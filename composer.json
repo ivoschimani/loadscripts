@@ -1,0 +1,39 @@
+{
+    "name": "ivoschimani/loadscritps",
+    "description": "Allows optimized loading of JS and CSS.",
+    "keywords": [
+        "contao",
+        "loadscripts"
+    ],
+    "type": "contao-bundle",
+    "license": "LGPL-3.0+",
+    "authors": [
+        {
+            "name": "Ivo Schimani",
+            "email": "ivo@schimani.de",
+            "role": "Project leader"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "contao/core-bundle": "^4.13"
+    },
+    "require-dev": {
+        "contao/manager-plugin": "^2.0"
+    },
+    "conflict": {
+        "contao/core": "*",
+        "contao/manager-plugin": "<2.0 || >=3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ivo\\LoadScripts\\": "src/"
+        },
+        "classmap": [
+            "src/Resources/contao/"
+        ]
+    },
+    "extra": {
+        "contao-manager-plugin": "Ivo\\LoadScripts\\ContaoManager\\Plugin"
+    }
+}
