@@ -2,9 +2,8 @@
 
 // Add the tablesorter style sheet
 $GLOBALS['TL_CSS'][] = 'assets/tablesorter/css/tablesorter.min.css|static';
-$GLOBALS['TL_JAVASCRIPT'] = 'assets/tablesorter/js/tablesorter.min.js|static';
-?>
-<script>
+$GLOBALS['TL_JAVASCRIPT'][] = 'assets/tablesorter/js/tablesorter.min.js|static';
+$script = "
 jQuery(function($) {
     $('.ce_table .sortable').each(function(i, table) {
         var attr = $(table).attr('data-sort-default'),
@@ -23,4 +22,8 @@ jQuery(function($) {
         $(table).tablesorter(opts);
     });
 });
-</script>
+";
+
+$GLOBALS['TL_JAVASCRIPT_QUEUE'][] = $script;
+
+?>

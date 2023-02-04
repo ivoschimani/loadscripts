@@ -3,9 +3,7 @@
 // Add the colorbox style sheet
 $GLOBALS['TL_CSS'][] = 'assets/colorbox/css/colorbox.min.css|static';
 $GLOBALS['TL_JAVASCRIPT'][] = 'assets/colorbox/js/colorbox.min.js|static';
-?>
-
-<script>
+$script = "
 jQuery(function($) {
     $('a[data-lightbox]').map(function() {
         $(this).colorbox({
@@ -17,4 +15,7 @@ jQuery(function($) {
         });
     });
 });
-</script>
+";
+
+$GLOBALS['TL_JAVASCRIPT_QUEUE'][] = $script;
+?>

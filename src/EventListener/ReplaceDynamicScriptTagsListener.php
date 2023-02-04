@@ -200,14 +200,14 @@ class ReplaceDynamicScriptTagsListener
     protected function generateJsQueue()
     {
         if ($GLOBALS['TL_JAVASCRIPT_QUEUE']) {
-            $script = `
+            $script = "
                 <script>
                     (function(){
-                        function onReady($){`;
+                        function onReady($){";
             foreach ($GLOBALS['TL_JAVASCRIPT_QUEUE'] as $js) {
                 $script .= $js;
             }
-            $script .= `}
+            $script .= "}
                         function waitForJquery(){
                             if (window.jQuery) {
                                 onReady(window.jQuery);
@@ -216,9 +216,9 @@ class ReplaceDynamicScriptTagsListener
                             }
                         }
                         waitForJquery();
-                    })
+                    })();
                 </script>
-            `;
+            ";
             $minifier = new Minify\JS($script);
             $script = $minifier->minify();
             $GLOBALS['TL_BODY']['js_queue'] = $script;

@@ -1,7 +1,6 @@
 <?php
-$GLOBALS['TL_JAVASCRIPT'][] = "assests/jquery-ui/js/jquery-ui.min.js";
-?>
-<script>
+$GLOBALS['TL_JAVASCRIPT'][] = "assets/jquery-ui/js/jquery-ui.min.js";
+$script = "
 jQuery(function($) {
     $(document).accordion({
         // Put custom options here
@@ -19,4 +18,7 @@ jQuery(function($) {
         }
     });
 });
-</script>
+";
+
+$GLOBALS['TL_JAVASCRIPT_QUEUE'][] = $script;
+?>
