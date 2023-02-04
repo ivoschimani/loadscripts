@@ -1,5 +1,7 @@
 <?php
 
+$GLOBALS['TL_DCA']['tl_layout']['config']['onload_callback'][] = ['Ivo\LoadScripts\Classes\DcaCallback', 'onLoadCallback'];
+
 $GLOBALS['TL_DCA']['tl_layout']['palettes']['default'] = str_replace(
     'external,',
     'externalCssHead,external,',
