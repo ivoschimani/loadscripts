@@ -98,7 +98,7 @@ class ReplaceDynamicScriptTagsListener
                 // Preload the Body JS file
                 $GLOBALS['TL_HEAD']['js_body'] = '<link rel="preload" href="' . $this->assetsUrl . $strBodyFile . '" as="script">';
                 // Initialize the body Array if it is not set
-                if (!$GLOBALS['TL_BODY']) {
+                if (!\array_key_exists('TL_BODY', $GLOBALS)) {
                     $GLOBALS['TL_BODY'] = [];
                 }
                 // Add the Body JS file to the body Array
@@ -113,7 +113,7 @@ class ReplaceDynamicScriptTagsListener
                 // Preload the Body CSS file
                 $GLOBALS['TL_HEAD']['css_body'] = '<link rel="preload" href="' . $this->assetsUrl . $strBodyFile . '" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">';
                 // Initialize the body Array if it is not set
-                if (!$GLOBALS['TL_BODY']) {
+                if (!\array_key_exists('TL_BODY', $GLOBALS)) {
                     $GLOBALS['TL_BODY'] = [];
                 }
                 // Add the Body CSS file to the body Array
@@ -130,7 +130,7 @@ class ReplaceDynamicScriptTagsListener
         if ($this->layout->orderExtJsHead) {
             $externalJsHead = StringUtil::deserialize($this->layout->orderExtJsHead, true);
         }
-        if ($GLOBALS['TL_JAVASCRIPT_HEAD']) {
+        if (\array_key_exists('TL_JAVASCRIPT_HEAD', $GLOBALS) && !empty($GLOBALS['TL_JAVASCRIPT_HEAD'])) {
             $externalJsHead = \array_merge($externalJsHead, $GLOBALS['TL_JAVASCRIPT_HEAD']);
         }
         if ($externalJsHead && !empty($externalJsHead)) {
@@ -144,10 +144,10 @@ class ReplaceDynamicScriptTagsListener
         $arrFiles = [];
         $arrKeys = [];
         $externalCssHead = StringUtil::deserialize($this->layout->externalCssHead, true);
-        if ($GLOBALS['TL_CSS_HEAD']) {
+        if (\array_key_exists('TL_CSS_HEAD', $GLOBALS) && !empty($GLOBALS['TL_CSS_HEAD'])) {
             $externalCssHead = array_merge($GLOBALS['TL_CSS_HEAD'], $externalCssHead);
         }
-        if ($GLOBALS['TL_FRAMEWORK_CSS']) {
+        if (\array_key_exists('TL_FRAMEWORK_CSS', $GLOBALS) && !empty($GLOBALS['TL_FRAMEWORK_CSS'])) {
             $externalCssHead = array_merge($GLOBALS['TL_FRAMEWORK_CSS'], $externalCssHead);
         }
         $GLOBALS['TL_FRAMEWORK_CSS'] = null;
@@ -162,10 +162,10 @@ class ReplaceDynamicScriptTagsListener
         $arrFiles = [];
         $arrKeys = [];
         $externalJs = StringUtil::deserialize($this->layout->externalJsBody, true);
-        if ($GLOBALS['TL_JAVASCRIPT_BODY']) {
+        if (\array_key_exists('TL_JAVASCRIPT_BODY', $GLOBALS) && !empty($GLOBALS['TL_JAVASCRIPT_BODY'])) {
             $externalJs = array_merge($GLOBALS['TL_JAVASCRIPT_BODY'], $externalJs);
         }
-        if ($GLOBALS['TL_JAVASCRIPT']) {
+        if (\array_key_exists('TL_JAVASCRIPT', $GLOBALS) && !empty($GLOBALS['TL_JAVASCRIPT'])) {
             $externalJs = array_merge($GLOBALS['TL_JAVASCRIPT'], $externalJs);
         }
         $GLOBALS['TL_JAVASCRIPT'] = null;
@@ -180,13 +180,13 @@ class ReplaceDynamicScriptTagsListener
         $arrFiles = [];
         $arrKeys = [];
         $externalCss = StringUtil::deserialize($this->layout->external, true);
-        if ($GLOBALS['TL_CSS_BODY']) {
+        if (\array_key_exists('TL_CSS_BODY', $GLOBALS) && !empty($GLOBALS['TL_CSS_BODY'])) {
             $externalCss = array_merge($GLOBALS['TL_CSS_BODY'], $externalCss);
         }
-        if ($GLOBALS['TL_USER_CSS']) {
+        if (\array_key_exists('TL_USER_CSS', $GLOBALS) && !empty($GLOBALS['TL_USER_CSS'])) {
             $externalCss = array_merge($GLOBALS['TL_USER_CSS'], $externalCss);
         }
-        if ($GLOBALS['TL_CSS']) {
+        if (\array_key_exists('TL_CSS', $GLOBALS) && !empty($GLOBALS['TL_CSS'])) {
             $externalCss = array_merge($GLOBALS['TL_CSS'], $externalCss);
         }
         $GLOBALS['TL_CSS'] = null;
@@ -199,7 +199,7 @@ class ReplaceDynamicScriptTagsListener
 
     protected function generateJsQueue()
     {
-        if ($GLOBALS['TL_JAVASCRIPT_QUEUE']) {
+        if (\array_key_exists('TL_JAVASCRIPT_QUEUE', $GLOBALS) && !empty($GLOBALS['TL_JAVASCRIPT_QUEUE'])) {
             $script = "
                 <script>
                     (function(){
