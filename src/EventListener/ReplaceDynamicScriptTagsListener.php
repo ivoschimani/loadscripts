@@ -50,7 +50,6 @@ class ReplaceDynamicScriptTagsListener
 
     public function __invoke(string $buffer): string
     {
-        // dump($buffer);
         global $objPage;
         $container = System::getContainer();
         $this->rootDir = $container->getParameter('kernel.project_dir');
@@ -263,7 +262,7 @@ class ReplaceDynamicScriptTagsListener
             $minifier->setMaxImportSize(10);
             $combiner = new Combiner();
         }
-        if (!file_exists($this->rootDir . '/assets/' . $strPath . '/minify_' . $strKey . $strExt)) {
+        if (!file_exists($this->rootDir . '/public/assets/' . $strPath . '/minify_' . $strKey . $strExt)) {
             if ($this->strMode == 'CSS') {
                 foreach ($arrFiles as $file) {
                     $combiner->add($file);
@@ -272,9 +271,9 @@ class ReplaceDynamicScriptTagsListener
                 $arrFiles = [$strFile];
             }
             foreach ($arrFiles as $file) {
-                $minifier->add($this->rootDir . '/' . $file);
+                $minifier->add($this->rootDir . '/public/' . $file);
             }
-            $minifier->minify($this->rootDir . '/assets/' . $strPath . '/minify_' . $strKey . $strExt);
+            $minifier->minify($this->rootDir . '/public/assets/' . $strPath . '/minify_' . $strKey . $strExt);
         }
         return '/assets/' . $strPath . '/minify_' . $strKey . $strExt;
     }
