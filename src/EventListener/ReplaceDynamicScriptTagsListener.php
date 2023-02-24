@@ -200,9 +200,9 @@ class ReplaceDynamicScriptTagsListener
     {
         $script = "
             <script>
-            var ready = false;
+            var loaded = false;
                 function ready(){
-                    ready = true;
+                    loaded = true;
                 }
             </script>
         ";
@@ -217,7 +217,7 @@ class ReplaceDynamicScriptTagsListener
             }
             $script .= "}
                         function waitForScript(){
-                            if (ready) {
+                            if (loaded) {
                                 onReady();
                             } else {
                                 setTimeout(waitForScript, 200);
