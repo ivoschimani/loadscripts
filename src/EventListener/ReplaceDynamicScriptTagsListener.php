@@ -101,7 +101,7 @@ class ReplaceDynamicScriptTagsListener
                     $GLOBALS['TL_BODY'] = [];
                 }
                 // Add the Body JS file to the body Array
-                array_unshift($GLOBALS['TL_BODY'], '<script defer src="' . $this->assetsUrl . $strBodyFile . '"></script>');
+                array_unshift($GLOBALS['TL_BODY'], '<script defer src="' . $this->assetsUrl . $strBodyFile . '" onload="ready()"></script>');
             }
         } else {
             if ($strHeadFile) {
@@ -198,23 +198,32 @@ class ReplaceDynamicScriptTagsListener
 
     protected function generateJsQueue()
     {
+        $script = "
+            <script>
+            var ready = false;
+                function ready(){
+                    ready = true;
+                }
+            </script>
+        ";
+        $GLOBALS['TL_HEAD']['js_queue'] = $script;
         if (\array_key_exists('TL_JAVASCRIPT_QUEUE', $GLOBALS) && !empty($GLOBALS['TL_JAVASCRIPT_QUEUE'])) {
             $script = "
                 <script>
                     (function(){
-                        function onReady($){";
+                        function onReady(){";
             foreach ($GLOBALS['TL_JAVASCRIPT_QUEUE'] as $js) {
                 $script .= $js;
             }
             $script .= "}
-                        function waitForJquery(){
-                            if (window.jQuery) {
-                                onReady(window.jQuery);
+                        function waitForScript(){
+                            if (ready) {
+                                onReady();
                             } else {
-                                setTimeout(waitForJquery, 200);
+                                setTimeout(waitForScript, 200);
                             }
                         }
-                        waitForJquery();
+                        waitForScript();
                     })();
                 </script>
             ";
