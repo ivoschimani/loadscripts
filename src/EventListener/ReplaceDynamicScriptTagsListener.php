@@ -147,7 +147,7 @@ class ReplaceDynamicScriptTagsListener
             $externalCssHead = array_merge($externalCssHead, $GLOBALS['TL_CSS_HEAD']);
         }
         if (\array_key_exists('TL_FRAMEWORK_CSS', $GLOBALS) && !empty($GLOBALS['TL_FRAMEWORK_CSS'])) {
-            $externalCssHead = array_merge($externalCssHead, $GLOBALS['TL_FRAMEWORK_CSS']);
+            $externalCssHead = array_merge($GLOBALS['TL_FRAMEWORK_CSS'], $externalCssHead);
         }
         $GLOBALS['TL_FRAMEWORK_CSS'] = null;
         if ($externalCssHead && !empty($externalCssHead)) {
@@ -183,7 +183,7 @@ class ReplaceDynamicScriptTagsListener
             $externalCss = array_merge($externalCss, $GLOBALS['TL_CSS_BODY']);
         }
         if (\array_key_exists('TL_USER_CSS', $GLOBALS) && !empty($GLOBALS['TL_USER_CSS'])) {
-            $externalCss = array_merge($externalCss, $GLOBALS['TL_USER_CSS']);
+            $externalCss = array_merge($GLOBALS['TL_USER_CSS'], $externalCss);
         }
         if (\array_key_exists('TL_CSS', $GLOBALS) && !empty($GLOBALS['TL_CSS'])) {
             $externalCss = array_merge($externalCss, $GLOBALS['TL_CSS']);
