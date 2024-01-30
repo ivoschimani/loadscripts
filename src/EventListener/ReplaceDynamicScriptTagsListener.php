@@ -51,6 +51,9 @@ class ReplaceDynamicScriptTagsListener
     public function __invoke(string $buffer): string
     {
         global $objPage;
+        if (!$objPage) {
+            return $buffer;
+        }
         $container = System::getContainer();
         $this->rootDir = $container->getParameter('kernel.project_dir');
         $this->assetsUrl = $container->get('contao.assets.assets_context')->getStaticUrl();
