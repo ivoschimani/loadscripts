@@ -2,7 +2,9 @@
 
 namespace Ivo\LoadScripts\Classes;
 
-class Combiner extends \Contao\Combiner
+use Contao\Combiner as ContaoCombiner;
+
+class Combiner extends ContaoCombiner
 {
     public function getCombinedFile($strUrl = null)
     {

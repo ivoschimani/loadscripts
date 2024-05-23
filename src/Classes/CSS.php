@@ -2,11 +2,15 @@
 
 namespace Ivo\LoadScripts\Classes;
 
-class CSS extends \MatthiasMullie\Minify\CSS
+use Contao\System;
+use MatthiasMullie\Minify\CSS as MinifyCSS;
+
+class CSS extends MinifyCSS
 {
 
     protected function importFiles($source, $content)
     {
+        $container = System::getContainer();
         $extensions = array_keys($this->importExtensions);
         $regex      = '/url\((["\']?)((?!["\']?data:).*?\.(' . implode('|', $extensions) . '))\\1\)/i';
         if ($extensions && preg_match_all($regex, $content, $matches, PREG_SET_ORDER)) {
@@ -21,7 +25,7 @@ class CSS extends \MatthiasMullie\Minify\CSS
 
                 // only replace the import with the content if we're able to get
                 // the content of the file, and it's relatively small
-                $path = str_replace(TL_ASSETS_URL, "../../", $path);
+                $path = str_replace("//", "/", $path);
                 if ($this->canImportFile($path) && $this->canImportBySize($path)) {
                     // grab content && base64-ize
                     $importContent = $this->load($path);

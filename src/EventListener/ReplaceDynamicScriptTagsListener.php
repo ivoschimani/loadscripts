@@ -84,7 +84,7 @@ class ReplaceDynamicScriptTagsListener
         $strHeadFile = $this->getMinimizedFile($arrHeadFiles, $arrHeadKeys);
         $strBodyFile = $this->getMinimizedFile($arrBodyFiles, $arrBodyKeys);
         // Get the file contents of the Head file
-        $strHeadFileContent = file_get_contents($this->rootDir . $strHeadFile);
+        $strHeadFileContent = file_get_contents($this->rootDir . '/' . $strHeadFile);
         if ($this->strMode == 'JS') {
             if ($strHeadFile) {
                 // Check if the file is too big for the <head> tag
@@ -287,6 +287,6 @@ class ReplaceDynamicScriptTagsListener
             }
             $minifier->minify($this->rootDir . '/public/assets/' . $strPath . '/minify_' . $strKey . $strExt);
         }
-        return '/assets/' . $strPath . '/minify_' . $strKey . $strExt;
+        return 'assets/' . $strPath . '/minify_' . $strKey . $strExt;
     }
 }
