@@ -54,6 +54,7 @@ class ReplaceDynamicScriptTagsListener
         if (!$objPage) {
             return $buffer;
         }
+        $objPage->scriptsGenerated = false;
         $container = System::getContainer();
         $this->rootDir = $container->getParameter('kernel.project_dir');
         $this->assetsUrl = $container->get('contao.assets.assets_context')->getStaticUrl();
@@ -181,7 +182,7 @@ class ReplaceDynamicScriptTagsListener
     {
         $arrFiles = [];
         $arrKeys = [];
-        $externalCss = StringUtil::deserialize($this->layout->external, true);
+        $externalCss = StringUtil::deserialize($this->layout->externalCssBody, true);
         if (\array_key_exists('TL_CSS_BODY', $GLOBALS) && !empty($GLOBALS['TL_CSS_BODY'])) {
             $externalCss = array_merge($externalCss, $GLOBALS['TL_CSS_BODY']);
         }
