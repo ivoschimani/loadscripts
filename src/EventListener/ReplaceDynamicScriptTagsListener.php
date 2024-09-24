@@ -67,7 +67,7 @@ class ReplaceDynamicScriptTagsListener
             $this->replaceDynamicScriptTags($objPage);
             $this->strMode = 'CSS';
             $this->replaceDynamicScriptTags($objPage);
-            $objPage->scriptsGenerated = true;
+            // $objPage->scriptsGenerated = true;
         }
         return $buffer;
     }
@@ -135,8 +135,10 @@ class ReplaceDynamicScriptTagsListener
         if ($this->layout->orderExtJsHead) {
             $externalJsHead = StringUtil::deserialize($this->layout->orderExtJsHead, true);
         }
-        if (\array_key_exists('TL_JAVASCRIPT_HEAD', $GLOBALS) && !empty($GLOBALS['TL_JAVASCRIPT_HEAD'])) {
-            $externalJsHead = \array_merge($externalJsHead, $GLOBALS['TL_JAVASCRIPT_HEAD']);
+        if ($GLOBALS['TL_JAVASCRIPT_HEAD'] ?? false || $_SESSION['TL_JAVASCRIPT_HEAD'] ?? false) {
+            $_SESSION['TL_JAVASCRIPT_HEAD'] = \array_merge($_SESSION['TL_JAVASCRIPT_HEAD'] ?? [], $GLOBALS['TL_JAVASCRIPT_HEAD'] ?? []);
+            $GLOBALS['TL_JAVASCRIPT_HEAD'] = null;
+            $externalJsHead = \array_merge($externalJsHead, $_SESSION['TL_JAVASCRIPT_HEAD'] ?? []);
         }
         if ($externalJsHead && !empty($externalJsHead)) {
             [$arrFiles, $arrKeys] = $this->getFilesFromArray($externalJsHead);
@@ -149,13 +151,16 @@ class ReplaceDynamicScriptTagsListener
         $arrFiles = [];
         $arrKeys = [];
         $externalCssHead = StringUtil::deserialize($this->layout->externalCssHead, true);
-        if (\array_key_exists('TL_CSS_HEAD', $GLOBALS) && !empty($GLOBALS['TL_CSS_HEAD'])) {
-            $externalCssHead = array_merge($externalCssHead, $GLOBALS['TL_CSS_HEAD']);
+        if ($GLOBALS['TL_CSS_HEAD'] ?? false || $_SESSION['TL_CSS_HEAD'] ?? false) {
+            $_SESSION['TL_CSS_HEAD'] = \array_merge($_SESSION['TL_CSS_HEAD'] ?? [], $GLOBALS['TL_CSS_HEAD'] ?? []);
+            $GLOBALS['TL_CSS_HEAD'] = null;
+            $externalCssHead = array_merge($externalCssHead, $_SESSION['TL_CSS_HEAD'] ?? []);
         }
-        if (\array_key_exists('TL_FRAMEWORK_CSS', $GLOBALS) && !empty($GLOBALS['TL_FRAMEWORK_CSS'])) {
-            $externalCssHead = array_merge($GLOBALS['TL_FRAMEWORK_CSS'], $externalCssHead);
+        if ($GLOBALS['TL_FRAMEWORK_CSS'] ?? false || $_SESSION['TL_FRAMEWORK_CSS'] ?? false) {
+            $_SESSION['TL_FRAMEWORK_CSS'] = \array_merge($_SESSION['TL_FRAMEWORK_CSS'] ?? [], $GLOBALS['TL_FRAMEWORK_CSS'] ?? []);
+            $GLOBALS['TL_FRAMEWORK_CSS'] = null;
+            $externalCssHead = array_merge($_SESSION['TL_FRAMEWORK_CSS'] ?? false, $externalCssHead);
         }
-        $GLOBALS['TL_FRAMEWORK_CSS'] = null;
         if ($externalCssHead && !empty($externalCssHead)) {
             [$arrFiles, $arrKeys] = $this->getFilesFromArray($externalCssHead);
         }
@@ -167,13 +172,16 @@ class ReplaceDynamicScriptTagsListener
         $arrFiles = [];
         $arrKeys = [];
         $externalJs = StringUtil::deserialize($this->layout->externalJsBody, true);
-        if (\array_key_exists('TL_JAVASCRIPT_BODY', $GLOBALS) && !empty($GLOBALS['TL_JAVASCRIPT_BODY'])) {
-            $externalJs = array_merge($externalJs, $GLOBALS['TL_JAVASCRIPT_BODY']);
+        if ($GLOBALS['TL_JAVASCRIPT_BODY'] ?? false || $_SESSION['TL_JAVASCRIPT_BODY'] ?? false) {
+            $_SESSION['TL_JAVASCRIPT_BODY'] = \array_merge($_SESSION['TL_JAVASCRIPT_BODY'] ?? [], $GLOBALS['TL_JAVASCRIPT_BODY'] ?? []);
+            $GLOBALS['TL_JAVASCRIPT_BODY'] = null;
+            $externalJs = array_merge($externalJs, $_SESSION['TL_JAVASCRIPT_BODY'] ?? []);
         }
-        if (\array_key_exists('TL_JAVASCRIPT', $GLOBALS) && !empty($GLOBALS['TL_JAVASCRIPT'])) {
-            $externalJs = array_merge($externalJs, $GLOBALS['TL_JAVASCRIPT']);
+        if ($GLOBALS['TL_JAVASCRIPT'] ?? false || $_SESSION['TL_JAVASCRIPT'] ?? false) {
+            $_SESSION['TL_JAVASCRIPT'] = \array_merge($_SESSION['TL_JAVASCRIPT'] ?? [], $GLOBALS['TL_JAVASCRIPT'] ?? []);
+            $GLOBALS['TL_JAVASCRIPT'] = null;
+            $externalJs = array_merge($externalJs, $_SESSION['TL_JAVASCRIPT'] ?? []);
         }
-        $GLOBALS['TL_JAVASCRIPT'] = null;
         if ($externalJs && !empty($externalJs)) {
             [$arrFiles, $arrKeys] = $this->getFilesFromArray($externalJs);
         }
@@ -185,17 +193,21 @@ class ReplaceDynamicScriptTagsListener
         $arrFiles = [];
         $arrKeys = [];
         $externalCss = StringUtil::deserialize($this->layout->externalCssBody, true);
-        if (\array_key_exists('TL_CSS_BODY', $GLOBALS) && !empty($GLOBALS['TL_CSS_BODY'])) {
-            $externalCss = array_merge($externalCss, $GLOBALS['TL_CSS_BODY']);
+        if ($GLOBALS['TL_CSS_BODY'] ?? false || $_SESSION['TL_CSS_BODY'] ?? false) {
+            $_SESSION['TL_CSS_BODY'] = \array_merge($_SESSION['TL_CSS_BODY'] ?? [], $GLOBALS['TL_CSS_BODY'] ?? []);
+            $GLOBALS['TL_CSS_BODY'] = null;
+            $externalCss = array_merge($externalCss, $_SESSION['TL_CSS_BODY'] ?? []);
         }
-        if (\array_key_exists('TL_USER_CSS', $GLOBALS) && !empty($GLOBALS['TL_USER_CSS'])) {
-            $externalCss = array_merge($GLOBALS['TL_USER_CSS'], $externalCss);
+        if ($GLOBALS['TL_USER_CSS'] ?? false || $_SESSION['TL_USER_CSS'] ?? false) {
+            $_SESSION['TL_USER_CSS'] = \array_merge($_SESSION['TL_USER_CSS'] ?? [], $GLOBALS['TL_USER_CSS'] ?? []);
+            $GLOBALS['TL_USER_CSS'] = null;
+            $externalCss = array_merge($_SESSION['TL_USER_CSS'] ?? false, $externalCss);
         }
-        if (\array_key_exists('TL_CSS', $GLOBALS) && !empty($GLOBALS['TL_CSS'])) {
-            $externalCss = array_merge($externalCss, $GLOBALS['TL_CSS']);
+        if ($GLOBALS['TL_CSS'] ?? false || $_SESSION['TL_CSS'] ?? false) {
+            $_SESSION['TL_CSS'] = \array_merge($_SESSION['TL_CSS'] ?? [], $GLOBALS['TL_CSS'] ?? []);
+            $GLOBALS['TL_CSS'] = null;
+            $externalCss = array_merge($externalCss, $_SESSION['TL_CSS'] ?? []);
         }
-        $GLOBALS['TL_CSS'] = null;
-        $GLOBALS['TL_USER_CSS'] = null;
         if ($externalCss && !empty($externalCss)) {
             [$arrFiles, $arrKeys] = $this->getFilesFromArray($externalCss);
         }
@@ -214,11 +226,14 @@ class ReplaceDynamicScriptTagsListener
         ";
         $GLOBALS['TL_HEAD']['js_queue'] = $script;
         if (\array_key_exists('TL_JAVASCRIPT_QUEUE', $GLOBALS) && !empty($GLOBALS['TL_JAVASCRIPT_QUEUE'])) {
+
+            $_SESSION['TL_JAVASCRIPT_QUEUE'] = \array_merge($_SESSION['TL_JAVASCRIPT_QUEUE'] ?? [], $GLOBALS['TL_JAVASCRIPT_QUEUE'] ?? []);
+            $GLOBALS['TL_JAVASCRIPT_QUEUE'] = null;
             $script = "
                 <script>
                     (function(){
                         function onReady(){";
-            foreach ($GLOBALS['TL_JAVASCRIPT_QUEUE'] as $js) {
+            foreach ($_SESSION['TL_JAVASCRIPT_QUEUE'] as $js) {
                 $script .= $js;
             }
             $script .= "}
