@@ -102,12 +102,8 @@ class ReplaceDynamicScriptTagsListener
             if ($strBodyFile) {
                 // Preload the Body JS file
                 $GLOBALS['TL_HEAD']['js_body'] = '<link rel="preload" href="' . $this->assetsUrl . $strBodyFile . '" as="script">';
-                // Initialize the body Array if it is not set
-                if (!\array_key_exists('TL_BODY', $GLOBALS)) {
-                    $GLOBALS['TL_BODY'] = [];
-                }
                 // Add the Body JS file to the body Array
-                array_unshift($GLOBALS['TL_BODY'], '<script defer src="' . $this->assetsUrl . $strBodyFile . '" onload="ready()"></script>');
+                $GLOBALS['TL_BODY']['js_body'] = '<script defer src="' . $this->assetsUrl . $strBodyFile . '" onload="ready()"></script>';
             }
         } else {
             if ($strHeadFile) {
@@ -117,12 +113,8 @@ class ReplaceDynamicScriptTagsListener
             if ($strBodyFile) {
                 // Preload the Body CSS file
                 $GLOBALS['TL_HEAD']['css_body'] = '<link rel="preload" href="' . $this->assetsUrl . $strBodyFile . '" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">';
-                // Initialize the body Array if it is not set
-                if (!\array_key_exists('TL_BODY', $GLOBALS)) {
-                    $GLOBALS['TL_BODY'] = [];
-                }
                 // Add the Body CSS file to the body Array
-                array_unshift($GLOBALS['TL_BODY'], '<noscript><link rel="stylesheet" href="' . $this->assetsUrl . $strBodyFile . '" media="all"></noscript>');
+                $GLOBALS['TL_BODY']['css_body'] = '<noscript><link rel="stylesheet" href="' . $this->assetsUrl . $strBodyFile . '" media="all"></noscript>';
             }
         }
     }
