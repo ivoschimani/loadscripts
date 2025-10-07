@@ -11,8 +11,6 @@ use Ivo\LoadScripts\Classes\Combiner;
 use Ivo\LoadScripts\Classes\CSS;
 use MatthiasMullie\Minify;
 
-use function Safe\file_get_contents;
-
 #[AsHook('replaceDynamicScriptTags', priority: -999)]
 class ReplaceDynamicScriptTagsListener
 {
